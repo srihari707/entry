@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+     .container {
+  width: 30%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+}
+
+h1 {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+input[type="text"], input[type="password"] {
+  width: 10%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+input[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  </style>
+  <title>Course Selection Form</title>
+</head>
+<body>
+  <h1>Course Selection Form</h1>
+  <form action="form" method="post" id="my-form">
+     {% csrf_token %}
+    <label for="name">Name:</label>
+  <input type="text" id="name" name="name" required><br>
+
+  <label for="dob">Date of Birth:</label>
+  <input type="date" id="dob" name="dob" required><br>
+
+  <label for="age">Age:</label>
+  <input type="number" id="age" name="age" required><br>
+
+  <label for="gender">Gender:</label>
+  <select id="gender" name="gender" required>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+    <option value="other">Other</option>
+  </select><br>
+
+  <label for="phone">Phone Number:</label>
+  <input type="tel" id="phone" name="phone" required><br>
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" required><br>
+    <label for="purpose">Purpose:</label>
+    <select id="purpose" name="Purpose" required>
+      <option value="Enquiry">enquiry</option>
+      <option value="Place">place</option>
+      <option value="Order">order</option>
+      <option value="Return">Return</option>
+
+    </select>
+    <br>
+    <label for="department">Department:</label>
+    <select id="department" name="department" required>
+      <option value="science">Science</option>
+      <option value="commerce">Commerce</option>
+      <option value="arts">Arts</option>
+      <option value="sports">Sports</option>
+      <option value="it">IT</option>
+    </select>
+    <br>
+    <label for="course">Course:</label>
+    <select id="course" name="course" required>
+      <option>Select Department First</option>
+    </select>
+    <br>
+    <h1>materials provide</h1>
+    <input type="checkbox" id="notebook" name="notebook" value="True">
+    <label for="notebook">Note Book</label><br>
+
+    <input type="checkbox" id="pen" name="pen" value="True">
+    <label for="pen">Pen</label><br>
+
+    <input type="checkbox" id="papers" name="papers" value="True">
+    <label for="papers">Exam Papers</label><br>
+    <input type="submit" value="Submit">
+  </form>
+  <script>
+            const form = document.getElementById('my-form');
+
+        form.addEventListener('submit', (event) => {
+          const name = form.elements['name'].value;
+          const dob = form.elements['dob'].value;
+          const age = form.elements['age'].value;
+          const gender = form.elements['gender'].value;
+          const phone_number = form.elements['phone_number'].value;
+          const email = form.elements['email'].value;
+          const department = form.elements['department'].value;
+          const course = form.elements['course'].value;
+
+          if (!name || !dob || !age || !gender || !phone_number || !email || !department || !course) {
+            event.preventDefault();
+            alert('Please fill in all the required fields.');
+          }
+        });
+    // Define the courses for each department
+    const courses = {
+      science: ["Biology", "Chemistry", "Physics"],
+      commerce: ["BBA", "BCom", "MBA", "MCom"],
+      arts: ["BAL", "BBL", "MA", "MPhil"],
+      sports: ["Physical Education", "Sports Science"],
+      it: ["Computer Science", "Information Technology", "Cybersecurity"]
+    };
+
+    // Get references to the department and course select elements
+    const departmentSelect = document.getElementById("department");
+    const courseSelect = document.getElementById("course");
+
+    // Add an event listener to the department select element
+    departmentSelect.addEventListener("change", function() {
+      // Clear the current options in the course select element
+      courseSelect.innerHTML = "";
+
+      // Get the selected department
+      const department = this.value;
+
+      // If the department is not "Select Department First"
+      if (department !== "") {
+        // Get the courses for the selected department
+        const departmentCourses = courses[department];
+
+        // Add each course as an option in the course select element
+        departmentCourses.forEach(function(course) {
+          const option = document.createElement("option");
+          option.value = course;
+          option.text = course;
+          courseSelect.add(option);
+        });
+      } else {
+        // If the department is "Select Department First", add a default option
+        const option = document.createElement("option");
+        option.text = "Select Department First";
+        courseSelect.add(option);
+      }
+    });
+  </script>
+</body>
+</html>

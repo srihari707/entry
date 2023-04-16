@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			$('#department').change(function(){
+				var department = $(this).val();
+				$.ajax({
+					type: 'POST',
+					url: '',
+					data: {department: department},
+					success: function(courses){
+						$('#course').empty();
+						$.each(courses, function(index, course){
+							$('#course').append('<option value="'+course+'">'+course+'</option>');
+						});
+					}
+				});
+			});
+		});
+	</script>
+  <style>
+     .container {
+  width: 30%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+}
+
+h1 {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+input[type="text"], input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+input[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  </style>
+  <title>Course Selection Form</title>
+</head>
+<body>
+  <h1>Course Selection Form</h1>
+
+  <form method="post">
+     {% csrf_token %}
+    <label for="name">Name:</label>
+  <input type="text" id="name" name="name"><br>
+
+  <label for="dob">Date of Birth:</label>
+  <input type="date" id="dob" name="dob"><br>
+
+  <label for="age">Age:</label>
+  <input type="number" id="age" name="age"><br>
+
+  <label for="gender">Gender:</label>
+  <select id="gender" name="gender">
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+    <option value="other">Other</option>
+  </select><br>
+
+  <label for="phone">Phone Number:</label>
+  <input type="tel" id="phone" name="phone"><br>
+
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email"><br>
+    <label for="purpose">Department:</label>
+    <select id="purpose" name="department">
+      <option value="Enquiry">enquiry</option>
+      <option value="Place">place</option>
+      <option value="Order">order</option>
+      <option value="Return">Return</option>
+
+    </select><br>
+    <label for="department">Department:</label>
+		<select name="department" id="department">
+			<option value="">-- Select Department --</option>
+			<option value="science">Science</option>
+			<option value="commerce">Commerce</option>
+			<option value="it">IT</option>
+        <input type="submit" value="Submit">
+		</select><br>
+
+		<label for="course">Course:</label>
+		<select name="course" id="course">
+            {% for course in courses %}
+				<option value="{{ course }}">{{ course }}</option>
+			{% endfor %}
+
+		</select><br>
+      <h1>materials provide</h1>
+    <input type="checkbox" id="notebook" name="notebook" value="Note Book">
+    <label for="notebook">Note Book</label><br>
+
+    <input type="checkbox" id="pen" name="pen" value="Pen">
+    <label for="pen">Pen</label><br>
+
+    <input type="checkbox" id="papers" name="papers" value="Exam Papers">
+    <label for="papers">Exam Papers</label><br>
+    <input type="submit" value="Submit">
+ </body>
+</html>
